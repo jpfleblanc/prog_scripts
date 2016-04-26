@@ -2,9 +2,11 @@
 import h5py
 import numpy as np
 from numpy import pi
+import re
 
 from scipy import special
 
+	
 
 
 
@@ -34,14 +36,15 @@ def main(fname = "output.h5", verbosity = 1):
     # Read fluct_diag
     
 
-#    (grids, sigma_lat_pz) = read_hdf5(data["fluct_diag/sigma_lat_3.14159_0"])
-#    (grids, sigma_lat_p2p2) = read_hdf5(data["fluct_diag/sigma_lat_1.5708_1.5708"])
-#    bose_grid= grids[0].copy()[:,1]
+  #  (grids, sigma_lat_pz) = read_hdf5(data["fluct_diag/sigma_lat_3.14159_0"])
+  #  (grids, sigma_lat_p2p2) = read_hdf5(data["fluct_diag/sigma_lat_1.5708_1.5708"])
+ #   bose_grid= grids[0].copy()[:,1]
  #   fermi_grid= grids[1].copy()[:,1]
   #  qx_grid= grids[2].copy()
-   # qy_grid= grids[3].copy()
+  #  qy_grid= grids[3].copy()
 
-    
+
+   
     
  
 
@@ -102,14 +105,14 @@ def main(fname = "output.h5", verbosity = 1):
 #############
 
 # write plottable fluct_diag file
-#    diag_collect=[]
+    diag_collect=[]
     
 #    for qx in range (len(qx_grid)):
-#      for qy in range (n_kpoints):
-#        diag_collect.append((qx_grid[qx], qy_grid[qy], (sigma_lat_pz[len(bose_grid)/2][len(fermi_grid)/2][qx][qy])[1], (sigma_lat_p2p2[len(bose_grid)/2][len(fermi_grid)/2][qx][qy])[1]))
+ #     for qy in range (n_kpoints):
+  #      diag_collect.append((qx_grid[qx], qy_grid[qy], (sigma_lat_pz[len(bose_grid)/2][len(fermi_grid)/2][qx][qy])[1], (sigma_lat_p2p2[len(bose_grid)/2][len(fermi_grid)/2][qx][qy])[1]))
 
 
-#    np.savetxt("fluct_diag_node-antinode.dat", diag_collect)
+    np.savetxt("fluct_diag_node-antinode.dat", diag_collect)
 
     
 
@@ -127,7 +130,59 @@ def main(fname = "output.h5", verbosity = 1):
 
 
 
+ #Read spin_susc
 
+#    for i in range(0,len(bose_grid)):
+#      print bose_grid[i]
+     # (grids, spin_susc)=read_hdf5(
+
+# Collect all spin susceptibility keys
+    keys=[]
+    for item in data.keys():
+      if 'spin_susc' in item and '_k' in item:
+        keys.append(item)
+
+#    keys=sorted(keys)#, key=natural_keys)  
+    freq=[]
+    for item in keys:
+#      print item[11:-2]
+      freq.append(float(item[11:-2]))
+
+    freq=sorted(freq)
+    del keys[:]
+   # print keys
+    for item in freq:
+      keys.append("spin_susc_W"+("%.6f"%item)+"_k")
+
+
+    susc_collect=[]
+    for element in range(0, len(keys)):
+     # print keys[element]
+      (grids, spin_susc)=read_hdf5(data[keys[element]])
+      spin_susc=spin_susc.view(complex)
+
+      qx_grid=grids[0].copy()
+      qy_grid=grids[0].copy()
+
+      for i in range(0,len(qx_grid)):
+        for j in range(0, len(qy_grid)):
+#          susc_collect.append((qx_grid[i],qy_grid[j], freq[element], np.real(spin_susc[i][j]), np.imag(spin_susc[i][j]) ))
+          susc_collect.append((qx_grid[i],qy_grid[j], int(element - len(freq)/2), np.real(spin_susc[i][j]), np.imag(spin_susc[i][j]) ))
+
+    np.savetxt("chi_file.dat", susc_collect)
+
+
+
+
+
+
+
+def natural_keys(text):
+    '''
+    alist.sort(key=natural_keys) sorts in human order
+    http://nedbatchelder.com/blog/200712/human_sorting.html
+    '''    
+    return [ str(c) for c in re.split('([-]?\d+)', text) ]
 
     
 def read_hdf5(group):
