@@ -139,7 +139,7 @@ def eval():
 		#	print("I am in " + os.getcwd())	
 			# check if qmc_output has been made
 			if os.path.exists(os.getcwd()+"/qmc_output.h5")==False:
-				options_str="--vertex ../vert_F_phpp --gw_real ../../G_omegareal_18 --gw_imag ../../G_omega_18 --sigma ../../selfenergy_18 --nbosonic 15 --mu "+str(mu)
+				options_str="--vertex ../vert_F_phpp --gw_real ../../G_omegareal_18 --gw_imag ../../G_omega_18 --sigma ../../selfenergy_18 --nbosonic 24 --mu "+str(mu)
 				os.system("python $HOME/alps_git/scripts/dmft_to_opendf/parse_alps_data.py "+ options_str)
 			# run_DF
 			if os.path.exists(os.getcwd()+"/output.h5")==False or rerun_DF==True:

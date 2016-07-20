@@ -1,0 +1,41 @@
+import math,zlib,numpy,sys
+import os
+import numpy
+
+
+
+#beta = float(sys.argv[1])
+inputfile = sys.argv[1]
+
+#clustername="Betts2D-8A"
+#qx, qy=numpy.loadtxt(open('/home/jpfleblanc/working_2016/cluster_momenta/momenta-'+clustername, 'r'), unpack=True)
+
+w,real_sigma, imag_sigma = numpy.loadtxt(inputfile, usecols=(0,1,2), unpack=True)
+freq_num= len(w)
+
+
+dataset=[]
+sumdata=[]
+
+chi=0
+deltak=0.3
+for j in range(0,len(w)):
+	print j, chi
+	
+	for kx in numpy.arange(0,2.0*numpy.pi, deltak):
+		for ky in numpy.arange(0,2.0*numpy.pi, deltak):
+			#print kx,ky
+			epsilon=-2.0*(math.cos(kx)+math.cos(ky))
+			G=(1.0/(1j*w[j]-epsilon-real_sigma[j]-1j*imag_sigma[j])  )
+			G_sqrd=-G*G#/numpy.pi/numpy.pi
+			
+			chi+=G_sqrd*deltak*deltak*2.0
+			#print kx,ky,G_sqrd, chi
+
+
+numpy.savetxt('dmft_gg.dat',dataset)
+
+
+
+
+

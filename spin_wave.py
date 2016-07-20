@@ -20,7 +20,7 @@ for qx in numpy.linspace(0,1, 600):
 		Jpp=2.
 		Jc=38.
 		t=330.
-		zc=0.448
+		zc=1.0#0.448
 		J=J/t*zc
 		Jp=Jp/t*zc
 		Jpp=Jpp/t*zc
