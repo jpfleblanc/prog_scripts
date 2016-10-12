@@ -144,7 +144,9 @@ def eval():
 			# run_DF
 			if os.path.exists(os.getcwd()+"/output.h5")==False or rerun_DF==True:
 				#os.system("sh ../../../../../prog_runs_scripts/run_DF.sh")
-				os.system("$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5 --nbosonic 15 --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 1 --mu "+str(mu) +" --tp "+str(tprime))
+				print "Calculation string is"
+				print "$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5 --nbosonic 24 --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 1 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
+				os.system("$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5 --nbosonic 24 --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 1 --mu "+str(mu) +" --tp "+str(tprime)+" --resume 1")
 				
 
 			os.system("python /home/jpfleblanc/working_2016/nikolay_requests/prog_scripts/extract_DF.py")
