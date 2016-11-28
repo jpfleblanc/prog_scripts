@@ -62,7 +62,7 @@ numpy.savetxt('dmft_gg_correction'+str(fermi_cutoff)+'_'+str(boserange)+'.dat',d
 
 
 
-qx, qy, w, real_chi, im_chi= numpy.loadtxt(inputfile, unpack=True)
+qx, qy, w, real_chi, im_chi= numpy.loadtxt(chi_file, unpack=True)
 
 chi_corrected_dataset=[]
 for i in range(0,len(w)):
