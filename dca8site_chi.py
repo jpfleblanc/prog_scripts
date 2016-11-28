@@ -5,7 +5,7 @@ import numpy
 inputfile = sys.argv[1]
 
 clustername="Betts2D-8A"
-qx, qy=numpy.loadtxt(open('/home/jpfleblanc/working_2016/cluster_momenta/momenta-'+clustername, 'r'), unpack=True)
+qx, qy=numpy.loadtxt(open('/home/jpfleblanc/working_2017/cluster_momenta/momenta-'+clustername, 'r'), unpack=True)
 
 chi = numpy.loadtxt(inputfile, unpack=True)
 
@@ -32,8 +32,8 @@ for j in range(0,site_num):
 for i in range(0, len(chi_sum)):
 	sumdata.append((i-(freq_num-1)/2, chi_sum[i]))
 
-numpy.savetxt('dca_chi_manipulated.dat',dataset)
-numpy.savetxt('dca_chi_local.dat',sumdata)
+numpy.savetxt(inputfile+'dca_chi_manipulated.dat',dataset)
+numpy.savetxt(inputfile+'dca_chi_local.dat',sumdata)
 
 
 
