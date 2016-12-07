@@ -131,7 +131,7 @@ def eval():
 				exit()
 			# check if inverter should be run
 			if os.path.exists(os.getcwd()+"/vert_F_phpp")==False or rerun_inverter==True:
-				os.system("sh /home/jpfleblanc/working_2016/nikolay_requests/prog_scripts/run_inverter_inplace.sh")
+				os.system("sh /home/jpfleblanc/working_2017/prog_scripts/run_inverter_inplace.sh")
 			# check if run_DF folder exists	
 			if os.path.exists(os.getcwd()+"/run_DF")==False:
 				os.system("mkdir run_DF")
@@ -139,17 +139,19 @@ def eval():
 		#	print("I am in " + os.getcwd())	
 			# check if qmc_output has been made
 			if os.path.exists(os.getcwd()+"/qmc_output.h5")==False:
-				options_str="--vertex ../vert_F_phpp --gw_real ../../G_omegareal_18 --gw_imag ../../G_omega_18 --sigma ../../selfenergy_18 --nbosonic 24 --mu "+str(mu)
+				options_str="--vertex ../vert_F_phpp --gw_real ../../G_omegareal_18 --gw_imag ../../G_omega_18 --sigma ../../selfenergy_18 --mu "+str(mu)
 				os.system("python $HOME/alps_git/scripts/dmft_to_opendf/parse_alps_data.py "+ options_str)
 			# run_DF
 			if os.path.exists(os.getcwd()+"/output.h5")==False or rerun_DF==True:
 				#os.system("sh ../../../../../prog_runs_scripts/run_DF.sh")
 				print "Calculation string is"
-				print "$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5 --nbosonic 24 --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 1 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
-				os.system("$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5 --nbosonic 24 --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 1 --mu "+str(mu) +" --tp "+str(tprime)+" --resume 1")
+				run_string="$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5  --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 0 --nbosonic 32 --add_lattice_bubble 1 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
+				print run_string
+
+				os.system(run_string)
 				
 
-			os.system("python /home/jpfleblanc/working_2016/nikolay_requests/prog_scripts/extract_DF.py")
+			os.system("python /home/jpfleblanc/working_2017/prog_scripts/extract_DF.py")
 		os.system("rm "+DF_running_path)
 
 
