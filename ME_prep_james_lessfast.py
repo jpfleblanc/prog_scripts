@@ -28,6 +28,7 @@ for s in range(0,len(qlist)):
 		if qx[i]==qlist[s][0] and qy[i]==qlist[s][1] and w[i]>=0:
 			if real_chi[i]>0:
 				#data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001 ,im_chi[i], 0.0001))
+				#set im_chi[i] to zero
 				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001 ,im_chi[i], 0.0001))
 				if w[i]==0:
 					norm=real_chi[i]
@@ -47,7 +48,7 @@ for s in range(0,len(qlist)):
 	parm_file.write("BETA = "+str(beta)+"\n")
 	parm_file.write("NFREQ = 600\n")
 	parm_file.write("NDAT = "+str(2*ndat)+"\n")
-	parm_file.write("FREQUENCY_GRID = quadratic\n")#Lorentzian\n")
+	parm_file.write("FREQUENCY_GRID = logarithmic\n")#quadratic\n")#Lorentzian\n")
 	parm_file.write("DATASPACE =frequency\n")
 	parm_file.write("MAX_IT = 1000\n")
 	parm_file.write("DEFAULT_MODEL =\"gaussian\"\n")
@@ -56,7 +57,7 @@ for s in range(0,len(qlist)):
 	parm_file.write("TEXT_OUTPUT = 1\n")
 	parm_file.write("SELF = 0\n")
 	parm_file.write("SIGMA = 0.5\n")
-	parm_file.write("PARTICLE_HOLE_SYMMETRY = 0\n")
+	parm_file.write("PARTICLE_HOLE_SYMMETRY = 0\n") # check kernel type
 	parm_file.write("GENERATE_ERR = 0\n")
 	parm_file.write("DATA = dat_in\n")
 
