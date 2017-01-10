@@ -116,14 +116,14 @@ def eval():
 
 
 			print("I am in " + os.getcwd())
-			print("Directory is "+ start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF/sigma_output_nodal.dat")
-			print("Should I be running in here? "+ str(os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF/sigma_output_nodal.dat")))
+			print("Directory is "+ start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/sigma_output_nodal.dat")
+			print("Should I be running in here? "+ str(os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/sigma_output_nodal.dat")))
 
 			DF_running_path=os.getcwd()+"/runningDF.dat"
 			
 			if os.path.exists(DF_running_path)==False:
 				os.system("echo 'blah'> runningDF.dat")
-				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF/sigma_output_nodal.dat") == False or run_anyways:
+				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/sigma_output_nodal.dat") == False or run_anyways:
 					current_number=current_number+1
 					if (current_number>max_number):
 						print("Hit max run, exiting")
@@ -132,9 +132,9 @@ def eval():
 					if os.path.exists(os.getcwd()+"/vert_F_phpp")==False or rerun_inverter==True:
 						os.system("sh /home/jpfleblanc/working/prog_scripts/run_inverter_inplace.sh")
 					# check if run_DF folder exists	
-					if os.path.exists(os.getcwd()+"/run_DF")==False:
-						os.system("mkdir run_DF")
-					os.chdir(os.getcwd()+"/run_DF")	
+					if os.path.exists(os.getcwd()+"/run_DF_nogg")==False:
+						os.system("mkdir run_DF_nogg")
+					os.chdir(os.getcwd()+"/run_DF_nogg")	
 				#	print("I am in " + os.getcwd())	
 					# check if qmc_output has been made
 					if os.path.exists(os.getcwd()+"/qmc_output.h5")==False:
@@ -144,7 +144,7 @@ def eval():
 					if os.path.exists(os.getcwd()+"/output.h5")==False or rerun_DF==True:
 						#os.system("sh ../../../../../prog_runs_scripts/run_DF.sh")
 						print "Calculation string is"
-						run_string="$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5  --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 0 --nbosonic 32 --add_lattice_bubble 1 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
+						run_string="$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5  --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 0 --nbosonic 32 --add_lattice_bubble 0 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
 						print run_string
 
 						os.system(run_string)				
