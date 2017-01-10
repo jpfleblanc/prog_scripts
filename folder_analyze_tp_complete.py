@@ -142,7 +142,7 @@ def eval():
 						os.system("python $HOME/alps_git/scripts/dmft_to_opendf/parse_alps_data.py "+ options_str)
 					# run_DF
 					if os.path.exists(os.getcwd()+"/output.h5")==False or rerun_DF==True:
-						#os.system("sh ../../../../../prog_runs_scripts/run_DF.sh")
+
 						print "Calculation string is"
 						run_string="$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5  --df_sc_cutoff 1.0e-8 --df_sc_iter 120 --df_sc_mix 0.2 --fluct_diag 0 --nbosonic 32 --add_lattice_bubble 1 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
 						print run_string
