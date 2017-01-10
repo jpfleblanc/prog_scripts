@@ -30,9 +30,9 @@ def main(argv):
 
 	nfermi=str(sys.argv[1])
 
-	os.system("python ~/working_2017/prog_scripts/extract_DF_chi.py")
-	os.system("~/working_2017/prog_scripts/bubble_code/bubble --input_dmft_file ../../Greens_17.h5 --input_df_file output.h5 --kpts 16 --nfermi "+nfermi+" --nbose 33 --beta 5 --output_file bubble.h5")
-	os.system("python ~/working_2017/prog_scripts/extract_bubble_chi.py")
+	os.system("python ~/working/prog_scripts/extract_DF_chi.py")
+	os.system("~/working/prog_scripts/bubble_code/bubble --input_dmft_file ../../Greens_17.h5 --input_df_file output.h5 --kpts 16 --nfermi "+nfermi+" --nbose 33 --beta 5 --output_file bubble.h5")
+	os.system("python ~/working/prog_scripts/extract_bubble_chi.py")
 
 
 	
