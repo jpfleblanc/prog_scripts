@@ -19,9 +19,9 @@ small_f=int(sys.argv[3])
 inputdir_small = sys.argv[4]
 
 os.chdir(inputdir_big)
-#os.system("python ~/working/prog_scripts/run_bubble_correction.py "+str(big_f) )
+os.system("python ~/working/prog_scripts/run_bubble_correction.py "+str(big_f) )
 os.chdir(inputdir_small)
-#os.system("python ~/working/prog_scripts/run_bubble_correction.py "+str(small_f) )
+os.system("python ~/working/prog_scripts/run_bubble_correction.py "+str(small_f) )
 
 
 print "Reading first chi"

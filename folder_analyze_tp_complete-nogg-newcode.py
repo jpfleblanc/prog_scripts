@@ -55,6 +55,7 @@ def eval():
 	fileslist=[]
 
 	temp_mu_folders=[]
+	temp_mu_folders_filtered=[]
 	fig1b=[]
 
 	start_directory=os.getcwd()
@@ -97,10 +98,14 @@ def eval():
 		print("cd " + start_directory + "/"+ item)
 		print("I am in " + os.getcwd())
 		temp_mu_folders=filter(os.path.isdir, os.listdir('.'))
+		for temp_item in temp_mu_folders:
+			if "-ref" not in dir_items and "backup" not in temp_item:
+				temp_mu_folders_filtered.append(temp_item)
 		
-
+		print 'Folders are '
+		print temp_mu_folders_filtered
 # --------- check for sim.h5 files
-		for folder_item in temp_mu_folders:
+		for folder_item in temp_mu_folders_filtered:
 			
 			print "folder item is "+ folder_item
 			os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
@@ -123,7 +128,7 @@ def eval():
 			
 			if True:#os.path.exists(DF_running_path)==False:
 				os.system("echo 'blah'> runningDF.dat")
-				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/sigma_output_nodal.dat") == False or run_anyways:
+				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/output.h5") == False or run_anyways:
 					current_number=current_number+1
 					if (current_number>max_number):
 						print("Hit max run, exiting")
