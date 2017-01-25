@@ -23,7 +23,7 @@ data_real=[]
 for s in range(0,len(qlist)):
 
 	data_array=[]
-
+	data_shifted=[]
 	for i in range(0, len(qx)):
 		if qx[i]==qlist[s][0] and qy[i]==qlist[s][1] and w[i]>=0:
 			if real_chi[i]>0:
@@ -32,25 +32,29 @@ for s in range(0,len(qlist)):
 				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001 ,im_chi[i], 0.0001))
 				if w[i]==0:
 					norm=real_chi[i]
+	
+	for i in range(0,len(data_array)):
+		#print i,len(data_array)-1, data_array[len(data_array)-1][1], data_array[i][4]
+		data_shifted.append((data_array[i][0],data_array[i][1]-data_array[len(data_array)-1][1], data_array[i][2], data_array[i][3], data_array[i][4]))
 
 	#print data_array
 		
-	numpy.savetxt("dat_in", data_array)
+	numpy.savetxt("dat_in", data_shifted)
 	ndat=len(data_array)
 
 	del data_array[:]
 
 	parm_file=open("maxent.parm",'w')
-	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.15\nALPHA_MAX = 100\n")
+	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 100\n")
 	parm_file.write("NORM = "+str(norm)+"\n")
-	parm_file.write("OMEGA_MAX = 5\n")
+	parm_file.write("OMEGA_MAX = 15\n")
 	parm_file.write("KERNEL = bosonic\n")
 	parm_file.write("BETA = "+str(beta)+"\n")
 	parm_file.write("NFREQ = 1200\n")
 	parm_file.write("NDAT = "+str(2*ndat)+"\n")
-	parm_file.write("FREQUENCY_GRID = quadratic\n")#log\n")#quadratic\n")#Lorentzian\n")
+	parm_file.write("FREQUENCY_GRID = log\n")#quadratic\n")#log\n")#quadratic\n")#Lorentzian\n")
 	parm_file.write("DATASPACE =frequency\n")
-	parm_file.write("MAX_IT = 3000\n")
+	parm_file.write("MAX_IT = 4000\n")
 	parm_file.write("DEFAULT_MODEL =\"gaussian\"\n")
 	#parm_file.write("DEFAULT_MODEL = \"linear rise exp decay\" \n")#\"quadratic rise exp decay\"\n")
 	parm_file.write("LAMBDA = 1.0 \n")

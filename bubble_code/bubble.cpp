@@ -137,6 +137,7 @@ df_gf_with_tail compute_polarization(df_gf_with_tail gf, int n_omega4, int n_ome
   P.initialize();
   //Omega and q are the energy and momentum of P
   for(int Omega=-n_omega4_bose+1;Omega<n_omega4_bose;++Omega){
+    std::cout<<"NBose "<< Omega <<std::endl;
     for(int qx=0;qx<kpts;++qx){
       for(int qy=0;qy<kpts;++qy){
         //omega and k are the energy and momentum we sum over
