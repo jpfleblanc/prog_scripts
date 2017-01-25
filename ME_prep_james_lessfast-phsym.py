@@ -23,23 +23,19 @@ data_real=[]
 for s in range(0,len(qlist)):
 
 	data_array=[]
-	data_shifted=[]
+
 	for i in range(0, len(qx)):
 		if qx[i]==qlist[s][0] and qy[i]==qlist[s][1] and w[i]>=0:
 			if real_chi[i]>0:
 				#data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001 ,im_chi[i], 0.0001))
 				#set im_chi[i] to zero
-				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001 ,im_chi[i], 0.0001))
+				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001))
 				if w[i]==0:
 					norm=real_chi[i]
-	
-	for i in range(0,len(data_array)):
-		#print i,len(data_array)-1, data_array[len(data_array)-1][1], data_array[i][4]
-		data_shifted.append((data_array[i][0],data_array[i][1]-data_array[len(data_array)-1][1], data_array[i][2], data_array[i][3], data_array[i][4]))
 
-	#print data_array
+	print data_array
 		
-	numpy.savetxt("dat_in", data_shifted)
+	numpy.savetxt("dat_in", data_array)
 	ndat=len(data_array)
 
 	del data_array[:]
@@ -50,8 +46,8 @@ for s in range(0,len(qlist)):
 	parm_file.write("OMEGA_MAX = 15\n")
 	parm_file.write("KERNEL = bosonic\n")
 	parm_file.write("BETA = "+str(beta)+"\n")
-	parm_file.write("NFREQ = 1200\n")
-	parm_file.write("NDAT = "+str(2*ndat)+"\n")
+	parm_file.write("NFREQ = 1000\n")
+	parm_file.write("NDAT = "+str(ndat)+"\n")
 	parm_file.write("FREQUENCY_GRID = log\n")#quadratic\n")#log\n")#quadratic\n")#Lorentzian\n")
 	parm_file.write("DATASPACE =frequency\n")
 	parm_file.write("MAX_IT = 4000\n")
@@ -60,8 +56,8 @@ for s in range(0,len(qlist)):
 	parm_file.write("LAMBDA = 1.0 \n")
 	parm_file.write("TEXT_OUTPUT = 1\n")
 	parm_file.write("SELF = 0\n")
-	parm_file.write("SIGMA = 0.5\n")
-	parm_file.write("PARTICLE_HOLE_SYMMETRY = 0\n") # check kernel type
+	parm_file.write("SIGMA = 0.4\n")
+	parm_file.write("PARTICLE_HOLE_SYMMETRY = 1\n") # check kernel type
 	parm_file.write("GENERATE_ERR = 0\n")
 	parm_file.write("DATA = dat_in\n")
 

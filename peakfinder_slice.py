@@ -71,7 +71,7 @@ for ival in range(0,len(qlist)):
 
 	print maxval, maxw
 	for j in range(1,jmax):
-		if single_val_chi[j]>maxval and single_val_chi[j-1]<maxval:
+		if single_val_chi[j]>maxval/2.0 and single_val_chi[j-1]<maxval/2.0:
 			half_point=single_val_w[j]
 			lambda_output.append((qlist[ival][0], qlist[ival][1], maxw-half_point))
 			break
