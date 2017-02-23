@@ -55,6 +55,7 @@ def eval():
 	fileslist=[]
 
 	temp_mu_folders=[]
+	temp_mu_folders_filtered=[]
 	fig1b=[]
 
 	start_directory=os.getcwd()
@@ -97,63 +98,24 @@ def eval():
 		print("cd " + start_directory + "/"+ item)
 		print("I am in " + os.getcwd())
 		temp_mu_folders=filter(os.path.isdir, os.listdir('.'))
-		
+		for temp_item in temp_mu_folders:
+			if "-ref" not in dir_items and "backup" not in temp_item:
+				temp_mu_folders_filtered.append(temp_item)
 
+		print temp_mu_folders_filtered
 # --------- check for sim.h5 files
-		for folder_item in temp_mu_folders:
+		for folder_item in temp_mu_folders_filtered:
 			
 			print "folder item is "+ folder_item
 			os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
-			if os.path.exists(os.getcwd()+"/sim.h5"):
-				f = h5py.File(os.getcwd()+"/sim.h5", 'r')
-				mu=f["/parameters/MU"].value
-				site=f["/parameters/dca.SITES"].value
-				beta=f["/parameters/BETA"].value
-				T=1.0/float(beta)
-				nfreq=f["/parameters/NMATSUBARA"].value	
-				Uvalue=f["/parameters/U"].value	
-				tprime=f["/parameters/tprime"].value
 
-
-			print("I am in " + os.getcwd())
-			print("Directory is "+ start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/sigma_output_nodal.dat")
-			print("Should I be running in here? "+ str(os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/sigma_output_nodal.dat")))
-
-			DF_running_path=os.getcwd()+"/runningDF.dat"
+			big_f=64
+			inputdir_big = os.getcwd()+"/run_DF_nogg"
+			small_f=48
+			inputdir_small = os.getcwd()+"/run_DF_nogg-nfsmall"
 			
-			if True:#os.path.exists(DF_running_path)==False:
-				os.system("echo 'blah'> runningDF.dat")
-				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run" +"/run_DF_nogg/sigma_output_nodal.dat") == False or run_anyways:
-					current_number=current_number+1
-					if (current_number>max_number):
-						print("Hit max run, exiting")
-						exit()
-					# check if inverter should be run
-					if os.path.exists(os.getcwd()+"/vert_F_phpp")==False or rerun_inverter==True:
-						os.system("sh /home/jpfleblanc/working/prog_scripts/run_inverter_inplace_newcode.sh")
-					# check if run_DF folder exists	
-					if os.path.exists(os.getcwd()+"/run_DF_nogg")==False:
-						os.system("mkdir run_DF_nogg")
-					os.chdir(os.getcwd()+"/run_DF_nogg")	
-				#	print("I am in " + os.getcwd())	
-					# check if qmc_output has been made
-					if os.path.exists(os.getcwd()+"/qmc_output.h5")==False:
-						options_str="--vertex ../vert_F_phpp --gw ../../G_omega_17 --sigma ../../selfenergy_17  --mu "+str(mu)
-						os.system("python $HOME/alps_git/scripts/dmft_to_opendf/parse_alpscore_data.py "+ options_str)
-					# run_DF
-					if os.path.exists(os.getcwd()+"/output.h5")==False or rerun_DF==True:
-						#os.system("sh ../../../../../prog_runs_scripts/run_DF.sh")
-						print "Calculation string is"
-						run_string="$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5  --df_sc_cutoff 1.0e-8 --df_sc_iter 1200 --df_sc_mix 0.2 --fluct_diag 0 --nbosonic 32 --add_lattice_bubble 0 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
-						print run_string
-
-						os.system(run_string)				
-
-					os.system("python /home/jpfleblanc/working/prog_scripts/slice_spinwave_script.py "+str(beta) )
-				os.system("rm "+DF_running_path)
-
-
-
+			if os.path.exists(os.getcwd()+"/chi_extrapolated.dat")==False:
+				os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small)    
 	
 			
 
