@@ -1,6 +1,7 @@
 # An example of parsing df data
 import h5py
 import numpy as np
+import os, os.path, shutil, distutils.dir_util
 from numpy import pi
 
 from scipy import special
@@ -78,6 +79,7 @@ def main(fname = "output.h5", verbosity = 1):
     sigma_c1 = [[0 for x in range(n_kpoints)] for x in range(n_kpoints)] 
 
     density_matrix=[[0 for x in range(n_kpoints)] for x in range(n_kpoints)] 
+    tail_matrix=[[0 for x in range(n_kpoints)] for x in range(n_kpoints)] 
 
 
 
@@ -85,6 +87,7 @@ def main(fname = "output.h5", verbosity = 1):
 
     density=0.0
     density_2=0.0
+    tail=0.0
 
 ## Global skip for skipping momenta
 
@@ -101,7 +104,8 @@ def main(fname = "output.h5", verbosity = 1):
         #print green_c2
 
        
-
+   # print 'Constants'
+    #print green_c1, green_c2, green_c3
 
 
 
@@ -123,13 +127,14 @@ def main(fname = "output.h5", verbosity = 1):
         for w in range (n_wpoints/2, n_wpoints): 
           if kx%global_skip==0 and ky%global_skip==0: 
           #print w
-            density_matrix[kx][ky]+=2.0*np.real(g[w][kx][ky])/beta*2.0
+            density_matrix[kx][ky]+=2.0*np.real(g[w][kx][ky])/beta  #*2.0 # not sure why this 2 was here
           #print np.sign(g[w][kx][ky])
 
             #density_2+=np.abs(np.real(g[w][kx][ky]))/beta/pow(len(kgrid)/global_skip,2)
 
           #print np.abs(np.real(g[w][kx][ky]))/beta
         density_matrix[kx][ky]-= 2.0*high_freq_int * green_c2[kx][ky]/beta
+        tail_matrix[kx][ky]-= 2.0*high_freq_int * green_c2[kx][ky]/beta
        # print 2.0*high_freq_int * green_c2[kx][ky]/beta
 
 
@@ -137,9 +142,20 @@ def main(fname = "output.h5", verbosity = 1):
       for ky in range (n_kpoints):   
         if kx%global_skip==0 and ky%global_skip==0:
           density+= density_matrix[kx][ky]/pow(len(kgrid)/global_skip,2)
+          tail+= tail_matrix[kx][ky]/pow(len(kgrid)/global_skip,2)
         #  print density
     print "Density is "
     print density
+    print "DMFT density was"
+    if os.path.exists("../../sim.h5"):
+      f = h5py.File("../../sim.h5", 'r')
+      density_mean =(f["/simulation/results/density_up/mean/value"].value+f["/simulation/results/density_down/mean/value"].value)*0.5
+      density_mean = sum(density_mean)/float(len(density_mean))
+    print density_mean
+
+
+    print "Tail part is "
+    print tail
 
 
 
