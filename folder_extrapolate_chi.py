@@ -106,8 +106,8 @@ def eval():
 # --------- check for sim.h5 files
 		for folder_item in temp_mu_folders_filtered:
 
-			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/sim.h5"):
-			f = h5py.File(start_directory + "/"+ item+"/"+folder_item+"/sim.h5", 'r')
+			if os.path.exists("/"+folder_item+"/sim.h5"):
+			f = h5py.File("/"+folder_item+"/sim.h5", 'r')
 			mu=f["/parameters/MU"].value
 			site=f["/parameters/dca.SITES"].value
 			beta=f["/parameters/BETA"].value
