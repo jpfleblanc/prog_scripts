@@ -105,6 +105,17 @@ def eval():
 		print temp_mu_folders_filtered
 # --------- check for sim.h5 files
 		for folder_item in temp_mu_folders_filtered:
+
+			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/sim.h5"):
+			f = h5py.File(start_directory + "/"+ item+"/"+folder_item+"/sim.h5", 'r')
+			mu=f["/parameters/MU"].value
+			site=f["/parameters/dca.SITES"].value
+			beta=f["/parameters/BETA"].value
+			T=1.0/float(beta)
+			nfreq=f["/parameters/NMATSUBARA"].value	
+			Uvalue=f["/parameters/U"].value	
+			tprime=f["/parameters/tprime"].value
+
 			
 			print "folder item is "+ folder_item
 			os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
@@ -115,7 +126,7 @@ def eval():
 			inputdir_small = os.getcwd()+"/run_DF_nogg-nfsmall"
 			
 			if os.path.exists(os.getcwd()+"/chi_extrapolated.dat")==False:
-				os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small)    
+				os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small" " +beta)    
 	
 			
 
