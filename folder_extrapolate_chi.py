@@ -105,16 +105,18 @@ def eval():
 		print temp_mu_folders_filtered
 # --------- check for sim.h5 files
 		for folder_item in temp_mu_folders_filtered:
+			print os.getcwd()
+			print start_directory + "/"+ item+"/"+folder_item+"/sim.h5"
 
-			if os.path.exists("/"+folder_item+"/sim.h5"):
-			f = h5py.File("/"+folder_item+"/sim.h5", 'r')
-			mu=f["/parameters/MU"].value
-			site=f["/parameters/dca.SITES"].value
-			beta=f["/parameters/BETA"].value
-			T=1.0/float(beta)
-			nfreq=f["/parameters/NMATSUBARA"].value	
-			Uvalue=f["/parameters/U"].value	
-			tprime=f["/parameters/tprime"].value
+			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/sim.h5"):
+				f = h5py.File(start_directory + "/"+ item+"/"+folder_item+"/sim.h5", 'r')
+				mu=f["/parameters/MU"].value
+				site=f["/parameters/dca.SITES"].value
+				beta=f["/parameters/BETA"].value
+				T=1.0/float(beta)
+				nfreq=f["/parameters/NMATSUBARA"].value	
+				Uvalue=f["/parameters/U"].value	
+				tprime=f["/parameters/tprime"].value
 
 			
 			print "folder item is "+ folder_item
@@ -126,7 +128,8 @@ def eval():
 			inputdir_small = os.getcwd()+"/run_DF_nogg-nfsmall"
 			
 			if os.path.exists(os.getcwd()+"/chi_extrapolated.dat")==False:
-				os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small" " +beta)    
+				if os.path.exists(inputdir_big+"/output.h5") && os.path.exists(inputdir_small+"/output.h5")
+					os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta))    
 	
 			
 
