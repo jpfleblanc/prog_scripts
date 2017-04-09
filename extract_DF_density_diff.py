@@ -215,7 +215,7 @@ def main(fname = "output.h5", verbosity = 1):
 
     print imag_wgrid[n_wpoints-1], c2, df_local_G[last-1], high_freq_int, local_diff_sum, local_diff_sum - 2.0*high_freq_int * c2/beta
 
-    df_density_correction=local_diff_sum - 2.0*high_freq_int * c2/beta
+    df_density_correction=local_diff_sum #- 2.0*high_freq_int * c2/beta
     print df_density_correction, density_mean, df_density_correction+density_mean
 
 
