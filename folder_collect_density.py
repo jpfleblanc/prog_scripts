@@ -127,9 +127,9 @@ def eval():
 
 				
 				if os.path.exists(os.getcwd()+"/output.h5")==True:
-					os.system("python ~/working/prog_scripts/extract_DF_density.py ")
-				if os.path.exists(os.getcwd()+"/densities.dat"):
-					mu_val, n_val,dmft_n=numpy.loadtxt("densities.dat", usecols=(0,1,2), unpack=True)   
+					os.system("python ~/working/prog_scripts/extract_DF_density_diff.py ")
+				if os.path.exists(os.getcwd()+"/densities_local.dat"):
+					mu_val, n_val,dmft_n=numpy.loadtxt("densities_local.dat", usecols=(0,1,2), unpack=True)   
 					data_collected.append((Uvalue,T,tprime, mu_val,n_val,dmft_n))
 			
 
