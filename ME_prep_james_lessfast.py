@@ -49,6 +49,7 @@ for s in range(0,len(qlist)):
 	del data_array[:]
 
 	parm_file=open("maxent.parm",'w')
+
 	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 40\n")
 	parm_file.write("NORM = "+str(norm)+"\n")
 	parm_file.write("OMEGA_MAX = 8\n")
