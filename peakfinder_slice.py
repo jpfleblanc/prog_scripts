@@ -69,6 +69,7 @@ for ival in range(0,len(qlist)):
 				maxw=single_val_w[j]
 				break
 
+	print "Maxval"
 	print maxval, maxw
 	for j in range(1,jmax):
 		if single_val_chi[j]>maxval/2.0 and single_val_chi[j-1]<maxval/2.0:
