@@ -121,14 +121,16 @@ def eval():
 			
 			print "folder item is "+ folder_item
 			os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
+			print start_directory + "/"+ item+"/"+folder_item+"/vertex_run"
 
 			big_f=64
 			inputdir_big = os.getcwd()+"/run_DF_nogg"
 			small_f=48
 			inputdir_small = os.getcwd()+"/run_DF_nogg-nfsmall"
+			print inputdir_big+"/output.h5", os.path.exists(inputdir_big+"/output.h5"),inputdir_small+"/output.h5", os.path.exists(inputdir_small+"/output.h5")
 			
 			if os.path.exists(os.getcwd()+"/chi_extrapolated.dat")==False:
-				if os.path.exists(inputdir_big+"/output.h5") && os.path.exists(inputdir_small+"/output.h5")
+				if os.path.exists(inputdir_big+"/output.h5") and os.path.exists(inputdir_small+"/output.h5"):
 					os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta))    
 	
 			
