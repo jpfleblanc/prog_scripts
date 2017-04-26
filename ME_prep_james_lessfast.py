@@ -49,26 +49,16 @@ for s in range(0,len(qlist)):
 	del data_array[:]
 
 	parm_file=open("maxent.parm",'w')
-<<<<<<< HEAD
-	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 40\n")
-	parm_file.write("NORM = "+str(norm)+"\n")
-	parm_file.write("OMEGA_MAX = 8\n")
-=======
 	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 50\n")
 	parm_file.write("NORM = "+str(norm)+"\n")
 	parm_file.write("OMEGA_MAX = 12\n")
->>>>>>> dd27f311dc77559a00bcaafd37089d65a95f2abc
 	parm_file.write("KERNEL = bosonic\n")
 	parm_file.write("BETA = "+str(beta)+"\n")
 	parm_file.write("NFREQ = 1200\n")
 	parm_file.write("NDAT = "+str(2*ndat)+"\n")
 	parm_file.write("FREQUENCY_GRID = log\n")#quadratic\n")#log\n")#quadratic\n")#Lorentzian\n")
 	parm_file.write("DATASPACE =frequency\n")
-<<<<<<< HEAD
-	parm_file.write("MAX_IT = 1000\n")
-=======
 	parm_file.write("MAX_IT = 1500\n")
->>>>>>> dd27f311dc77559a00bcaafd37089d65a95f2abc
 	parm_file.write("DEFAULT_MODEL =\"gaussian\"\n")
 	#parm_file.write("DEFAULT_MODEL = \"linear rise exp decay\" \n")#\"quadratic rise exp decay\"\n")
 	parm_file.write("LAMBDA = 1.0 \n")
