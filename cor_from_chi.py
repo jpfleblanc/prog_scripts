@@ -46,7 +46,9 @@ print xi, popt[0],popt[1]
 
 os.system("echo "+str(xi)+" > xi.dat")
 
+#xi_in=numpy.loadtxt("xi.dat")
 
+#print xi_in
 
 
 
