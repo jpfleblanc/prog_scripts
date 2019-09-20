@@ -87,6 +87,7 @@ def main(fname = "output.h5", verbosity = 1):
 
 #############
     sigma_collect=[]
+    ganti=[]
     kxwanted=0.0
     kywanted=3.14159
     for kx in range (n_kpoints):
@@ -95,10 +96,13 @@ def main(fname = "output.h5", verbosity = 1):
           if abs(kxwanted-kgrid[kx])<0.001 and abs(kywanted-kgrid[ky])<0.001:
         #    print kx, ky, kgrid[kx], kgrid[ky]
 	    sigma_collect.append((2*np.pi/beta*(w-n_wpoints/2+0.5), kgrid[kx], kgrid[ky], np.real(sigma[w][kx][ky])[0], np.imag(sigma[w][kx][ky])[0]))
+	    ganti.append((2*np.pi/beta*(w-n_wpoints/2+0.5), kgrid[kx], kgrid[ky], np.real(g[w][kx][ky])[0], np.imag(g[w][kx][ky])[0]))
 
     np.savetxt("sigma_output_antinodal.dat", sigma_collect)
+    np.savetxt("g_output_antinodal.dat", ganti)
 
     sigma_collect=[]
+    gnode=[]
     kxwanted=3.14159265/2.0
     kywanted=3.14159265/2.0
     for kx in range (n_kpoints):
@@ -106,8 +110,10 @@ def main(fname = "output.h5", verbosity = 1):
         for w in range(n_wpoints/2, n_wpoints):
           if abs(kxwanted-kgrid[kx])<0.001 and abs(kywanted-kgrid[ky])<0.001:
 	    sigma_collect.append((2*np.pi/beta*(w-n_wpoints/2+0.5), kgrid[kx], kgrid[ky], np.real(sigma[w][kx][ky])[0], np.imag(sigma[w][kx][ky])[0]))
+	    gnode.append((2*np.pi/beta*(w-n_wpoints/2+0.5), kgrid[kx], kgrid[ky], np.real(g[w][kx][ky])[0], np.imag(g[w][kx][ky])[0]))
 
     np.savetxt("sigma_output_nodal.dat", sigma_collect)
+    np.savetxt("g_output_nodal.dat", gnode)
 
 #############
 

@@ -110,13 +110,14 @@ def eval():
 
 			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/sim.h5"):
 				f = h5py.File(start_directory + "/"+ item+"/"+folder_item+"/sim.h5", 'r')
-				mu=f["/parameters/MU"].value
-				site=f["/parameters/dca.SITES"].value
-				beta=f["/parameters/BETA"].value
+				mu=f["/parameters/dictionary/MU"].value
+				site=f["/parameters/dictionary/dca.SITES"].value
+				beta=f["/parameters/dictionary/BETA"].value
 				T=1.0/float(beta)
-				nfreq=f["/parameters/NMATSUBARA"].value	
-				Uvalue=f["/parameters/U"].value	
-				tprime=f["/parameters/tprime"].value
+				nfreq=f["/parameters/dictionary/NMATSUBARA"].value	
+				Uvalue=f["/parameters/dictionary/U"].value	
+				tprime=f["/parameters/dictionary/tprime"].value
+				tdprime=f["/parameters/dictionary/tdprime"].value
 
 			
 			print "folder item is "+ folder_item
@@ -133,8 +134,7 @@ def eval():
 				if os.path.exists(inputdir_big+"/output.h5") and os.path.exists(inputdir_small+"/output.h5"):
 					f2 = h5py.File(inputdir_big+"/output.h5", 'r')
 					kpts=f2["/df/parameters/kpts"].value
-					os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta)+" " +str(kpts))      
-	
+					os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta)+" " +str(kpts))   
 			
 
 

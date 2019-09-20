@@ -32,8 +32,8 @@ for s in range(0,len(qlist)):
 
 
 
-#				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.00015 + real_chi[i]*0.001  ,im_chi[i], 0.00015))
-				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.000815 + real_chi[i]*0.001  ,im_chi[i], 0.000815))
+				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.00015 + real_chi[i]*0.002  ,im_chi[i], 0.00015))
+
 				if w[i]==0:
 					norm=real_chi[i]
 	
@@ -43,8 +43,8 @@ for s in range(0,len(qlist)):
 
 	#print data_array
 		
-#	numpy.savetxt("dat_in", data_shifted)
-	numpy.savetxt("dat_in", data_array)
+	numpy.savetxt("dat_in", data_shifted)
+#	numpy.savetxt("dat_in", data_array)
 	ndat=len(data_array)
 
 	del data_array[:]

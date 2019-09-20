@@ -58,6 +58,7 @@ def eval():
 	temp_mu_folders_filtered=[]
 	fig1b=[]
 	data_collected=[]
+	data_maxent=[]
 
 	start_directory=os.getcwd()
 	print("Starting in "+start_directory)
@@ -93,6 +94,7 @@ def eval():
 
 # ---------------- Now move into Betts directories
 
+	do_max_ent=True
 
 	for item in site_folderlist:
 		os.chdir(start_directory + "/"+ item)
@@ -122,58 +124,90 @@ def eval():
 			
 			print "folder item is "+ folder_item
 
-			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
-				os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
+
+
+#TODO replace peaks_slice with "awk -v max=0 '{if($4>max){want=$3; max=$4}}END{print want, max} ' realfreq.dat "  put in file then load peak, mag =numpy.loadtxt("file.dat", usecols=(0,1), unpack=True)
+			if do_max_ent:
+				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
+					os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
 				
-				peak_3po4=-1.0
-				try:
-					os.system("rm peaks_slice.dat")
-					os.system("sh ~/working/prog_scripts/3po4_ME.sh "+str(beta))
-					junk,peak_3po4=numpy.loadtxt("peaks_slice.dat", usecols=(0,2), unpack=True)
+					peak_3po4=-1.0
+					try:
+						os.system("rm peaks_slice.dat")
+						os.system("sh ~/working/prog_scripts/3po4_ME.sh "+str(beta))
 
-				except:
-					pass		
+						#os.system("awk -v max=0 '{if($4>max){want=$3; max=$4}}END{print want, max} ' realfreq.dat > peaks_slice.dat") 
+						peak_3po4, mag_3po4=numpy.loadtxt("peaks_slice.dat", usecols=(2,3), unpack=True)
 
-			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
-				os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
+					except:
+						pass		
+
+				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
+					os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
 				
-				peak_piz=-1.0
-				try:
-					os.system("rm peaks_slice.dat")
-					os.system("sh ~/working/prog_scripts/piz_ME.sh "+str(beta))
-					junk,peak_piz=numpy.loadtxt("peaks_slice.dat", usecols=(0,2), unpack=True)
+					peak_piz=-1.0
+					try:
+						os.system("rm peaks_slice.dat")
+						os.system("sh ~/working/prog_scripts/piz_ME.sh "+str(beta))
+						#os.system("awk -v max=0 '{if($4>max){want=$3; max=$4}}END{print want, max} ' realfreq.dat > peaks_slice.dat")
+						peak_piz, mag_piz=numpy.loadtxt("peaks_slice.dat", usecols=(2,3), unpack=True)
 
-				except:
-					pass	
+					except:
+						pass	
 
-			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
-				os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
+				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
+					os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
 				
-				peak_zz=-1.0
-				try:
-					os.system("rm peaks_slice.dat")
-					os.system("sh ~/working/prog_scripts/zz_ME.sh "+str(beta))
-					junk,peak_zz=numpy.loadtxt("peaks_slice.dat", usecols=(0,2), unpack=True)
+					peak_zz=-1.0
+					try:
+						os.system("rm peaks_slice.dat")
+						os.system("sh ~/working/prog_scripts/zz_ME.sh "+str(beta))
+						#os.system("awk -v max=0 '{if($4>max){want=$3; max=$4}}END{print want, max} ' realfreq.dat > peaks_slice.dat")
+						peak_zz, mag_zz=numpy.loadtxt("peaks_slice.dat", usecols=(2,3), unpack=True)
 
-				except:
-					pass		
+					except:
+						pass		
 				
 
-			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
-				os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
+				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
+					os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
 				
-				peak_pipi=-1.0
-				try:
-					os.system("rm peaks_slice.dat")
-					os.system("sh ~/working/prog_scripts/pipi_ME.sh "+str(beta))
-					junk,peak_pipi=numpy.loadtxt("peaks_slice.dat", usecols=(0,2), unpack=True)
+					peak_pipi=-1.0
+					try:
+						os.system("rm peaks_slice.dat")
+						os.system("sh ~/working/prog_scripts/pipi_ME.sh "+str(beta))
+						#os.system("awk -v max=0 '{if($4>max){want=$3; max=$4}}END{print want, max} ' realfreq.dat > peaks_slice.dat")
+						peak_pipi, mag_pipi=numpy.loadtxt("peaks_slice.dat", usecols=(2,3), unpack=True)
 
-				except:
-					pass		
+					except:
+						pass	
+
+				if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
+					os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
+				
+					peak_p2p2=-1.0
+					try:
+						os.system("rm peaks_slice.dat")
+						os.system("sh ~/working/prog_scripts/p2p2_ME.sh "+str(beta))
+						#os.system("awk -v max=0 '{if($4>max){want=$3; max=$4}}END{print want, max} ' realfreq.dat > peaks_slice.dat")
+						peak_p2p2, mag_p2p2=numpy.loadtxt("peaks_slice.dat", usecols=(2,3), unpack=True)
+
+					except:
+						pass	
+
+	
 					
 				
 
-			print "Peak was " + str(peak_3po4)
+				print "Peak was " + str(peak_3po4)
+
+
+
+			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run/chi_extrapolated.dat"):
+				xi=-1
+				os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
+				os.system("python ~/working/prog_scripts/cor_from_chi.py")
+				xi=numpy.loadtxt("xi.dat")
 
 			if os.path.exists(start_directory + "/"+ item+"/"+folder_item+"/vertex_run"+"/run_DF_nogg"):
 				os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run"+"/run_DF_nogg")
@@ -183,11 +217,16 @@ def eval():
 					os.system("python ~/working/prog_scripts/extract_DF_density_diff.py ")
 				if os.path.exists(os.getcwd()+"/densities_local.dat"):
 					mu_val, n_val,dmft_n=numpy.loadtxt("densities_local.dat", usecols=(0,1,2), unpack=True)   
-					data_collected.append((Uvalue,T,tprime, mu_val,n_val,dmft_n, peak_3po4, peak_piz, peak_zz, peak_pipi))
+					
+					data_collected.append((Uvalue,T,tprime, mu_val,n_val,dmft_n,  xi))
+
+					if do_max_ent:
+						data_maxent.append((Uvalue,T,tprime, mu_val,n_val, peak_3po4, peak_piz, peak_zz, peak_pipi, peak_p2p2, mag_3po4, mag_piz, mag_zz, mag_pipi, mag_p2p2))
 			
 
 	os.chdir(start_directory)
-	numpy.savetxt("density_ME_database.dat",data_collected)
+	numpy.savetxt("density_chi_database.dat",data_collected)
+	numpy.savetxt("density_ME_database.dat",data_maxent)
 
 
 

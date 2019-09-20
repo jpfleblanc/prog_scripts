@@ -58,11 +58,32 @@ def main(fname = "output.h5", verbosity = 1):
     sigma=sigma_lat.copy()
     g=glat.copy()
 
+
+
     I1=0
     I2=0
-    
+
+    print "DMFT density was"
+    if os.path.exists("sim_vertex_joe.h5"):
+      f = h5py.File("sim_vertex_joe.h5", 'r')
+      density_mean =(f["/simulation/results/density_up/mean/value"].value+f["/simulation/results/density_down/mean/value"].value)*0.5
+      density_mean = sum(density_mean)/float(len(density_mean))
+    print density_mean
+    g_dmft_re=(f["/simulation/results/G_omega_up_re0/mean/value"].value)
+    g_dmft_im=(f["/simulation/results/G_omega_up_im0/mean/value"].value)
+
+    print len(g_dmft_re)
+
 
     complex_i=0+1j
+    imag_dmft_wgrid=[]
+    for i in range(0, len(g_dmft_re)):
+	imag_dmft_wgrid.append((2*i+1)*np.pi/beta*complex_i)
+
+   # imag_dmft_wgrid=imag_dmft_wgrid*complex_i
+
+
+   
 
     imag_wgrid=wgrid.copy()
     imag_wgrid=imag_wgrid*complex_i
@@ -83,7 +104,7 @@ def main(fname = "output.h5", verbosity = 1):
 
 
 
-    high_freq_int= beta*beta* special.polygamma(1, 0.5+n_wpoints/2.0)/4/np.pi/np.pi
+    high_freq_int= beta*beta* special.polygamma(1, 0.5+len(g_dmft_re))/4/np.pi/np.pi#beta*beta* special.polygamma(1, 0.5+n_wpoints/2.0)/4/np.pi/np.pi
 
     density=0.0
     density_2=0.0
@@ -122,17 +143,27 @@ def main(fname = "output.h5", verbosity = 1):
     print "About to compute the density"
    # print green_c2
 
+    df_local_G=np.zeros(n_wpoints/2)
+    delta_G=np.zeros(n_wpoints/2)
+    print len(df_local_G)
+
     for kx in range (n_kpoints):
       for ky in range (n_kpoints):
         for w in range (n_wpoints/2, n_wpoints): 
           if kx%global_skip==0 and ky%global_skip==0: 
           #print w
+            df_local_G[w-n_wpoints/2]+=2.0*np.real(g[w][kx][ky])/beta/n_kpoints/n_kpoints
+            delta_G[w-n_wpoints/2]+=2.0*(np.real(g[w][kx][ky])-g_dmft_re[w-n_wpoints/2] )/beta/n_kpoints/n_kpoints
             density_matrix[kx][ky]+=2.0*np.real(g[w][kx][ky])/beta  #*2.0 # not sure why this 2 was here
           #print np.sign(g[w][kx][ky])
 
             #density_2+=np.abs(np.real(g[w][kx][ky]))/beta/pow(len(kgrid)/global_skip,2)
 
           #print np.abs(np.real(g[w][kx][ky]))/beta
+        for w in range (n_wpoints+1, len(g_dmft_re)-1):
+          density_matrix[kx][ky]+=2.0*(g_dmft_re[w])/beta
+
+
         density_matrix[kx][ky]-= 2.0*high_freq_int * green_c2[kx][ky]/beta
         tail_matrix[kx][ky]-= 2.0*high_freq_int * green_c2[kx][ky]/beta
        # print 2.0*high_freq_int * green_c2[kx][ky]/beta
@@ -147,19 +178,57 @@ def main(fname = "output.h5", verbosity = 1):
     print "Density is "
     print density
     print "DMFT density was"
-    if os.path.exists("../../sim.h5"):
-      f = h5py.File("../../sim.h5", 'r')
+    if os.path.exists("sim_vertex_joe.h5"):
+      f = h5py.File("sim_vertex_joe.h5", 'r')
       density_mean =(f["/simulation/results/density_up/mean/value"].value+f["/simulation/results/density_down/mean/value"].value)*0.5
       density_mean = sum(density_mean)/float(len(density_mean))
+      mu=f["/parameters/dictionary/MU"].value
     print density_mean
 
 
     print "Tail part is "
     print tail
+    output=[]
+    output.append((mu, density, density_mean))
+
+    np.savetxt("densities.dat", output)
+
+    output_df=[]
+    for i in range(0,len(df_local_G)):
+      output_df.append((wgrid[i+n_wpoints/2],df_local_G[i], 2.0*g_dmft_re[i]/beta, df_local_G[i]-2.0*g_dmft_re[i]/beta, delta_G[i]))
+
+    np.savetxt("df_local.dat",output_df)
+
+
+    last=len(df_local_G)
+    c1=1.0
+    c2=np.real(df_local_G[last-1])*np.real(imag_wgrid[n_wpoints-1]*imag_wgrid[n_wpoints-1]   )
+
+    high_freq_int= beta*beta* special.polygamma(1, 0.5+n_wpoints/2)/4/np.pi/np.pi#beta*beta* special.polygamma(1, 0.5+n_wpoints/2.0)/4/np.pi/np.pi
+
+
+    local_density_sum=0.0
+    local_diff_sum=0.0
+    for i in range(0,len(df_local_G)):
+      local_density_sum+=df_local_G[i]
+      local_diff_sum+=delta_G[i]
+
+    print imag_wgrid[n_wpoints-1], c2, df_local_G[last-1], high_freq_int, local_diff_sum, local_diff_sum - 2.0*high_freq_int * c2/beta
+
+    df_density_correction=local_diff_sum #- 2.0*high_freq_int * c2/beta
+    print df_density_correction, density_mean, df_density_correction+density_mean
+
+
+    final_density=[]
+    final_density.append((mu,df_density_correction+density_mean, density_mean ))
+    np.savetxt("densities_local.dat", final_density)
+
+    
 
 
 
-    U_value=2.0#12.0
+
+    U_value=8.0#12.0
     #density=1.0
 
     for kx in range (n_kpoints):
@@ -214,10 +283,6 @@ def main(fname = "output.h5", verbosity = 1):
 
     print "Corrections "
     print sigma_cor1, sigma_cor2, gw_1, high_freq_int, hartree_part, density, density_2
-
-    double_occ=[]
-    double_occ.append((beta, 1/beta, potential_energy/U_value))
-    np.savetxt('double_occ.dat', double_occ)
 
     #print "Adding terms"
     #print potential_energy, gw_1, potential_energy+gw_1/2.0

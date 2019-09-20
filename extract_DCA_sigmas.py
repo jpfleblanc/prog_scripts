@@ -30,7 +30,8 @@ def extract_DCA_sigma(filename, clustername, clustersize):
   result_w0= imag_selfe(a,0, N)
   result_w1= imag_selfe(a,1, N)
 
-  kx, ky=numpy.loadtxt(open('../../../cluster_momenta/momenta-'+clustername, 'r'), unpack=True)
+  kx, ky=numpy.loadtxt(open('../../../../cluster_momenta/momenta-'+clustername, 'r'), unpack=True)
+  #print(kx,ky)
   
   return kx, ky, result_w0, result_w1
 
@@ -42,6 +43,7 @@ def get_selfe(kx, ky, kxlist, kylist, selfelist):
 	return selfelist[index]
 
 def nodal_k_index(kxlist,kylist):
+	index=1
 	for i in range(0, len(kxlist)):
 		if abs(kxlist[i]-1.5707)<0.001 and abs(kylist[i]-1.5707)<0.001:
 			#print kxlist[i], kylist[i]
@@ -50,6 +52,7 @@ def nodal_k_index(kxlist,kylist):
 	return index
 
 def antinodal_k_index(kxlist,kylist):
+        index=1
 	for i in range(0, len(kxlist)):
 		if abs(kxlist[i]-3.14159)<0.001 and abs(kylist[i]-0)<0.001:
 #			print kxlist[i], kylist[i]
@@ -165,29 +168,38 @@ def eval():
 # --------- check for sim.h5 files
 		for folder_item in temp_mu_folders:
 			os.chdir(start_directory + "/"+ item+"/"+folder_item)	
+			print("I am in " + os.getcwd())
 			if os.path.exists(os.getcwd()+"/sim.h5"):
-				f = h5py.File(os.getcwd()+"/sim.h5", 'r')
-				mu=f["/parameters/MU"].value
-				site=f["/parameters/SITES"].value
-				beta=f["/parameters/BETA"].value
-				T=1.0/float(beta)
-				nfreq=f["/parameters/NMATSUBARA"].value	
-				Uvalue=f["/parameters/U"].value	
-				tprime=f["/parameters/t'"].value
+                                f = h5py.File(os.getcwd()+"/sim.h5", 'r')
+                                mu=f["/parameters/dictionary/MU"].value
+                                site=f["/parameters/dictionary/dca.SITES"].value
+                                beta=f["/parameters/dictionary/BETA"].value
+                                T=1.0/float(beta)
+                                nfreq=f["/parameters/dictionary/NMATSUBARA"].value
+                                Uvalue=f["/parameters/dictionary/U"].value
+                                tprime=f["/parameters/dictionary/tprime"].value
+ 
+
 		
 				print("I am in " + os.getcwd())
 				files_list = [file for file in os.listdir(os.getcwd())]
 				sigma_list=[]			
 				for file_item in files_list:
-					if "selfenergy_" in file_item:
+					if "selfenergy_" in file_item and "newG0" not in file_item:
 						sigma_list.append(file_item)
 
 				if len(sigma_list)>2:
 					print len(sigma_list)
-					sigma_filename="selfenergy_"+str(len(sigma_list))
+					sigma_filename="selfenergy_"+str(len(sigma_list)-1)
+					print("Attempting to draw from "+ sigma_filename)
 					print (item[:-1])[-2:]			
 					kxlist,kylist,w0,w1=extract_DCA_sigma(sigma_filename, item, site)
-					os.system("awk '{print $1,$"+str(nodal_k_index(kxlist,kylist)*4)+",$"+str(nodal_k_index(kxlist,kylist)*4+1)+",$"+str(antinodal_k_index(kxlist,kylist)*4)+",$"+str(antinodal_k_index(kxlist,kylist)*4+1)+"}' "+sigma_filename+" > n_an_sigma.dat")
+					print("Nodal and antinodal indices are")
+					print (nodal_k_index(kxlist,kylist), antinodal_k_index(kxlist,kylist))		
+
+					awk_command="awk 'FNR>3 {print $1,$"+str(nodal_k_index(kxlist,kylist)*4)+",$"+str(nodal_k_index(kxlist,kylist)*4+1)+",$"+str(antinodal_k_index(kxlist,kylist)*4)+",$"+str(antinodal_k_index(kxlist,kylist)*4+1)+"}' "+sigma_filename+" > n_an_sigma.dat"
+					print (awk_command)
+					os.system(awk_command)
 					nodal_k=nodal_k_index(kxlist,kylist)
 					antinodal_k=antinodal_k_index(kxlist,kylist)
 					nodal_w0=get_selfe(kxlist[nodal_k], kylist[nodal_k], kxlist, kylist, w0)

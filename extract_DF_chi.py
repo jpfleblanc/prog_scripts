@@ -157,7 +157,7 @@ def main(fname = "output.h5", verbosity = 1):
 
     susc_collect=[]
     for element in range(0, len(keys)):
-     # print keys[element]
+      print keys[element]
       (grids, spin_susc)=read_hdf5(data[keys[element]])
       spin_susc=spin_susc.view(complex)
 

@@ -123,9 +123,9 @@ def eval():
 			os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
 			print start_directory + "/"+ item+"/"+folder_item+"/vertex_run"
 
-			big_f=64
+			big_f=128
 			inputdir_big = os.getcwd()+"/run_DF_nogg"
-			small_f=48
+			small_f=96
 			inputdir_small = os.getcwd()+"/run_DF_nogg-nfsmall"
 			print inputdir_big+"/output.h5", os.path.exists(inputdir_big+"/output.h5"),inputdir_small+"/output.h5", os.path.exists(inputdir_small+"/output.h5")
 			
@@ -133,7 +133,7 @@ def eval():
 				if os.path.exists(inputdir_big+"/output.h5") and os.path.exists(inputdir_small+"/output.h5"):
 					f2 = h5py.File(inputdir_big+"/output.h5", 'r')
 					kpts=f2["/df/parameters/kpts"].value
-					os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta)+" " +str(kpts))      
+					os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta)+" " +str(kpts))    
 	
 			
 

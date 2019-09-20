@@ -18,8 +18,8 @@ print 'Argument List:', str(sys.argv)
 beta=str(sys.argv[1])
 print "Beta is "+ beta
 
-os.system("python ~/working/prog_scripts/extract_DF.py")
-os.system("python ~/working/prog_scripts/extract_DF_chi.py")
+#os.system("python ~/working/prog_scripts/extract_DF.py")
+#os.system("python ~/working/prog_scripts/extract_DF_chi.py")
 os.system("python ~/working/prog_scripts/realslice_reducer.py chi_file.dat")
 os.system("python ~/working/prog_scripts/ME_prep_james_lessfast.py "+beta+" chi_slices.dat")
 os.system("python ~/working/prog_scripts/peakfinder_slice.py realfreq.dat")
