@@ -41,5 +41,8 @@ for qx in numpy.linspace(0,1, 600):
 		results.append((qx,qy,result))
 
 
+
+
+# Save to file
 numpy.savetxt('spinwave.dat', results)
 

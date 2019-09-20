@@ -33,6 +33,8 @@ os.system("awk '$1==3.141592653589793116e+00 && $3==0{print}' chi_extrapolated.d
 print "Reading first chi"
 qx, qy, w, real_chi, im_chi= numpy.loadtxt("chi_pislice.dat", unpack=True)
 
+#qx, qy, w, real_chi, im_chi= numpy.loadtxt("data.dat", unpack=True)
+
 
 
 popt, pcov = curve_fit(func, qy, real_chi, bounds=(0, [100., 100.]))
@@ -46,7 +48,9 @@ print xi, popt[0],popt[1]
 
 os.system("echo "+str(xi)+" > xi.dat")
 
+#xi_in=numpy.loadtxt("xi.dat")
 
+#print xi_in
 
 
 
