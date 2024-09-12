@@ -136,7 +136,11 @@ def eval():
 						exit()
 					# check if inverter should be run
 					if os.path.exists(os.getcwd()+"/vert_F_phpp")==False or rerun_inverter==True:
+<<<<<<< HEAD
 						os.system("sh /home/jpfleblanc/working/prog_scripts/run_inverter_inplace_newcode.sh")
+=======
+						os.system("sh /home/jpfleblanc/working/prog_scripts/run_inverter_inplace_newest.sh")
+>>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 					# check if run_DF folder exists	
 					if os.path.exists(os.getcwd()+"/run_DF_nogg-nfsmall")==False:
 						os.system("mkdir run_DF_nogg-nfsmall")

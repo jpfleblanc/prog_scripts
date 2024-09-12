@@ -32,7 +32,17 @@ for s in range(0,len(qlist)):
 
 
 
+<<<<<<< HEAD
 				#data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.00015 + real_chi[i]*0.001  ,im_chi[i], 0.00015))
+=======
+
+#				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.00015 + real_chi[i]*0.001  ,im_chi[i], 0.00015))
+				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.000815 + real_chi[i]*0.001  ,im_chi[i], 0.000815))
+
+
+
+
+>>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 				if w[i]==0:
 					norm=real_chi[i]
 	
@@ -51,7 +61,15 @@ for s in range(0,len(qlist)):
 	parm_file=open("maxent.parm",'w')
 
 
+<<<<<<< HEAD
 	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 100\n")
+=======
+
+
+
+	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 40\n")
+
+>>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 	parm_file.write("NORM = "+str(norm)+"\n")
 	parm_file.write("OMEGA_MAX = 15\n")
 	parm_file.write("KERNEL = bosonic\n")

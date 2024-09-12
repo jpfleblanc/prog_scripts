@@ -46,7 +46,7 @@ def main(fname = "bubble.h5", verbosity = 1):
     np.savetxt("bubble.dat", bubble_collect)
 
     print "Correcting chi_file.dat"
-    qx, qy, w, real_chi, im_chi= np.loadtxt("chi_file.dat", unpack=True)
+    qx, qy, w, real_chi, im_chi= np.loadtxt("chi_file_charge.dat", unpack=True)
 
     chi_corrected_dataset=[]
     for i in range(0,len(real_chi)):
@@ -54,7 +54,7 @@ def main(fname = "bubble.h5", verbosity = 1):
 
 	
 
-    np.savetxt('chi_spin_corrected.dat', chi_corrected_dataset)
+    np.savetxt('chi_corrected.dat', chi_corrected_dataset)
 
 
 

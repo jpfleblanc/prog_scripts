@@ -29,15 +29,7 @@ for s in range(0,len(qlist)):
 			if real_chi[i]>0:
 				#data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001 ,im_chi[i], 0.0001))
 				#set im_chi[i] to zero
-
-
-
-<<<<<<< HEAD
-				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0002861 ,im_chi[i], 0.0002841))
-=======
-				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.00015 + real_chi[i]*0.002  ,im_chi[i], 0.00015))
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
-
+				data_array.append((w[i]*2.0*numpy.pi/beta, real_chi[i], 0.0001 ,im_chi[i], 0.0001))
 				if w[i]==0:
 					norm=real_chi[i]
 	
@@ -48,46 +40,27 @@ for s in range(0,len(qlist)):
 	#print data_array
 		
 	numpy.savetxt("dat_in", data_shifted)
-<<<<<<< HEAD
-=======
-#	numpy.savetxt("dat_in", data_array)
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 	ndat=len(data_array)
 
 	del data_array[:]
 
 	parm_file=open("maxent.parm",'w')
-<<<<<<< HEAD
-	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 50\n")
+	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.015\nALPHA_MAX = 100\n")
 	parm_file.write("NORM = "+str(norm)+"\n")
-	parm_file.write("OMEGA_MAX = 12\n")
-=======
-
-	parm_file.write("N_ALPHA = 30\nALPHA_MIN = 0.015\nALPHA_MAX = 150\n")
-	parm_file.write("NORM = "+str(norm)+"\n")
-	parm_file.write("OMEGA_MAX = 8\n")
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
+	parm_file.write("OMEGA_MAX = 15\n")
 	parm_file.write("KERNEL = bosonic\n")
 	parm_file.write("BETA = "+str(beta)+"\n")
 	parm_file.write("NFREQ = 1200\n")
 	parm_file.write("NDAT = "+str(2*ndat)+"\n")
 	parm_file.write("FREQUENCY_GRID = log\n")#quadratic\n")#log\n")#quadratic\n")#Lorentzian\n")
 	parm_file.write("DATASPACE =frequency\n")
-<<<<<<< HEAD
-	parm_file.write("MAX_IT = 1500\n")
-=======
-	parm_file.write("MAX_IT = 1200\n")
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
+	parm_file.write("MAX_IT = 4000\n")
 	parm_file.write("DEFAULT_MODEL =\"gaussian\"\n")
 	#parm_file.write("DEFAULT_MODEL = \"linear rise exp decay\" \n")#\"quadratic rise exp decay\"\n")
 	parm_file.write("LAMBDA = 1.0 \n")
 	parm_file.write("TEXT_OUTPUT = 1\n")
 	parm_file.write("SELF = 0\n")
-<<<<<<< HEAD
 	parm_file.write("SIGMA = 0.5\n")
-=======
-	parm_file.write("SIGMA = 1.0\n")
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 	parm_file.write("PARTICLE_HOLE_SYMMETRY = 0\n") # check kernel type
 	parm_file.write("GENERATE_ERR = 0\n")
 	parm_file.write("DATA = dat_in\n")
@@ -95,7 +68,7 @@ for s in range(0,len(qlist)):
 
 	parm_file.close()
 
-	os.system("$HOME/alps_core/Maxent/install/maxent maxent.parm")
+	os.system("$HOME/alps_core/Maxent/install/bin/maxent maxent.parm")
 
 	w_real, chi_real = numpy.loadtxt('maxent.out.avspec_bose.dat', usecols=(0,1), unpack=True)
 

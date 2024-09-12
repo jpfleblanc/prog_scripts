@@ -111,14 +111,13 @@ def eval():
 			os.chdir(start_directory + "/"+ item+"/"+folder_item+"/vertex_run")
 			if os.path.exists(os.getcwd()+"/sim.h5"):
 				f = h5py.File(os.getcwd()+"/sim.h5", 'r')
-				mu=f["/parameters/dictionary/MU"].value
-				site=f["/parameters/dictionary/dca.SITES"].value
-				beta=f["/parameters/dictionary/BETA"].value
+				mu=f["/parameters/MU"].value
+				site=f["/parameters/dca.SITES"].value
+				beta=f["/parameters/BETA"].value
 				T=1.0/float(beta)
-				nfreq=f["/parameters/dictionary/NMATSUBARA"].value	
-				Uvalue=f["/parameters/dictionary/U"].value	
-				tprime=f["/parameters/dictionary/tprime"].value
-				tdprime=f["/parameters/dictionary/tdprime"].value
+				nfreq=f["/parameters/NMATSUBARA"].value	
+				Uvalue=f["/parameters/U"].value	
+				tprime=f["/parameters/tprime"].value
 
 
 			print("I am in " + os.getcwd())
@@ -136,11 +135,7 @@ def eval():
 						exit()
 					# check if inverter should be run
 					if os.path.exists(os.getcwd()+"/vert_F_phpp")==False or rerun_inverter==True:
-<<<<<<< HEAD
 						os.system("sh /home/jpfleblanc/working/prog_scripts/run_inverter_inplace_newcode.sh")
-=======
-						os.system("sh /home/jpfleblanc/working/prog_scripts/run_inverter_inplace_newest.sh")
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 					# check if run_DF folder exists	
 					if os.path.exists(os.getcwd()+"/run_DF_nogg")==False:
 						os.system("mkdir run_DF_nogg")
@@ -149,12 +144,12 @@ def eval():
 					# check if qmc_output has been made
 					if os.path.exists(os.getcwd()+"/qmc_output.h5")==False:
 						options_str="--vertex ../vert_F_phpp --gw ../../G_omega_17 --sigma ../../selfenergy_17  --mu "+str(mu)
-						os.system("python $HOME/alps_core/scripts/dmft_to_opendf/parse_alpscore_data.py "+ options_str)
+						os.system("python $HOME/alps_git/scripts/dmft_to_opendf/parse_alpscore_data.py "+ options_str)
 					# run_DF
 					if os.path.exists(os.getcwd()+"/output.h5")==False or rerun_DF==True:
 						#os.system("sh ../../../../../prog_runs_scripts/run_DF.sh")
 						print "Calculation string is"
-						run_string="$HOME/alps_core/opendf_tdp/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5  --df_sc_cutoff 1.0e-8 --df_sc_iter 2000 --df_sc_mix 0.12 --fluct_diag 0 --nbosonic 32 --add_lattice_bubble 0 --mu "+str(mu) +" --tp "+str(tprime) +" --tdp "+str(tdprime) +" --resume 1"
+						run_string="$HOME/alps_core/opendf/install/bin/hub_df_square_nnn --input qmc_output.h5  --df_sc_cutoff 1.0e-8 --df_sc_iter 2000 --df_sc_mix 0.12 --fluct_diag 0 --nbosonic 32 --add_lattice_bubble 0 --mu "+str(mu) +" --tp "+str(tprime) +" --resume 1"
 						print run_string
 
 						os.system(run_string)				

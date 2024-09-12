@@ -64,23 +64,15 @@ def main(fname = "output.h5", verbosity = 1):
     I2=0
 
     print "DMFT density was"
-    if os.path.exists("../../sim.h5"):
-      f = h5py.File("../../sim.h5", 'r')
+    if os.path.exists("sim_vertex_joe.h5"):
+      f = h5py.File("sim_vertex_joe.h5", 'r')
       density_mean =(f["/simulation/results/density_up/mean/value"].value+f["/simulation/results/density_down/mean/value"].value)*0.5
       density_mean = sum(density_mean)/float(len(density_mean))
     print density_mean
-<<<<<<< HEAD
-
-    g_dmft_re=(f["/simulation/results/G_omega_up_re0/mean/value"].value +f["/simulation/results/G_omega_down_re0/mean/value"].value)/2.0
-    g_dmft_im=(f["/simulation/results/G_omega_up_im0/mean/value"].value +f["/simulation/results/G_omega_up_im0/mean/value"].value)/2.0
-
-   
-=======
     g_dmft_re=(f["/simulation/results/G_omega_up_re0/mean/value"].value)
     g_dmft_im=(f["/simulation/results/G_omega_up_im0/mean/value"].value)
 
     print len(g_dmft_re)
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 
 
     complex_i=0+1j
@@ -90,15 +82,7 @@ def main(fname = "output.h5", verbosity = 1):
 
    # imag_dmft_wgrid=imag_dmft_wgrid*complex_i
 
-<<<<<<< HEAD
-    dmft_c3= -  ( g_dmft_im[len(g_dmft_im)-1]  - np.imag(1.0/imag_dmft_wgrid[n_wpoints-1])) *np.imag( imag_dmft_wgrid[n_wpoints-1]*imag_dmft_wgrid[n_wpoints-1]*imag_dmft_wgrid[n_wpoints-1]  ) 
 
-    print "Attempting to find dmft c3"
-    print dmft_c3
-    print len(g_dmft_re)
-=======
-
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
    
 
     imag_wgrid=wgrid.copy()
@@ -138,11 +122,7 @@ def main(fname = "output.h5", verbosity = 1):
           green_c1[kx][ky]=1.0
           green_c2[kx][ky]=np.real(g[n_wpoints-1][kx][ky])*np.real(imag_wgrid[n_wpoints-1]*imag_wgrid[n_wpoints-1]   )
           green_c3[kx][ky]= -  ( np.imag(g[n_wpoints-1][kx][ky]) - np.imag(1.0/imag_wgrid[n_wpoints-1])) *np.imag( imag_wgrid[n_wpoints-1]*imag_wgrid[n_wpoints-1]*imag_wgrid[n_wpoints-1]  )    
-<<<<<<< HEAD
-         # print green_c3[kx][ky]
-=======
         #print green_c2
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 
        
    # print 'Constants'
@@ -198,18 +178,11 @@ def main(fname = "output.h5", verbosity = 1):
     print "Density is "
     print density
     print "DMFT density was"
-    if os.path.exists("../../sim.h5"):
-      f = h5py.File("../../sim.h5", 'r')
+    if os.path.exists("sim_vertex_joe.h5"):
+      f = h5py.File("sim_vertex_joe.h5", 'r')
       density_mean =(f["/simulation/results/density_up/mean/value"].value+f["/simulation/results/density_down/mean/value"].value)*0.5
       density_mean = sum(density_mean)/float(len(density_mean))
-<<<<<<< HEAD
-      try:
-        mu=f["/parameters/dictionary/MU"].value
-      except:
-        mu=f["/parameters/MU"].value
-=======
       mu=f["/parameters/dictionary/MU"].value
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
     print density_mean
 
 
@@ -242,13 +215,6 @@ def main(fname = "output.h5", verbosity = 1):
 
     print imag_wgrid[n_wpoints-1], c2, df_local_G[last-1], high_freq_int, local_diff_sum, local_diff_sum - 2.0*high_freq_int * c2/beta
 
-<<<<<<< HEAD
-    print "Local diff sum"
-    print local_diff_sum
-
-
-=======
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
     df_density_correction=local_diff_sum #- 2.0*high_freq_int * c2/beta
     print df_density_correction, density_mean, df_density_correction+density_mean
 
@@ -257,11 +223,7 @@ def main(fname = "output.h5", verbosity = 1):
     final_density.append((mu,df_density_correction+density_mean, density_mean ))
     np.savetxt("densities_local.dat", final_density)
 
-<<<<<<< HEAD
-    np.savetxt("deltaG.dat", delta_G)
-=======
     
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 
 
 
@@ -302,13 +264,8 @@ def main(fname = "output.h5", verbosity = 1):
        
     #print sigma[0][0][1]
 
-<<<<<<< HEAD
-    print "I1 and I2 and gw_1"
-    print I1, I2, gw_1
-=======
     print "I1 and I2"
     print I1, I2
->>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
     print sigma_cor1, sigma_cor2, gw_1, high_freq_int, density, density_2
     I2-= sigma_cor1 + sigma_cor2
     I1+= gw_1

@@ -48,10 +48,17 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = /home/jpfleblanc/working_2017/prog_scripts/bubble_code
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/jpfleblanc/working_2017/prog_scripts/bubble_code
+=======
+CMAKE_SOURCE_DIR = /home/jpfleblanc/working/prog_scripts/bubble_code
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /home/jpfleblanc/working/prog_scripts/bubble_code
+>>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +87,15 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jpfleblanc/working_2017/prog_scripts/bubble_code/CMakeFiles /home/jpfleblanc/working_2017/prog_scripts/bubble_code/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jpfleblanc/working_2017/prog_scripts/bubble_code/CMakeFiles 0
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jpfleblanc/working/prog_scripts/bubble_code/CMakeFiles /home/jpfleblanc/working/prog_scripts/bubble_code/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jpfleblanc/working/prog_scripts/bubble_code/CMakeFiles 0
+>>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 .PHONY : all
 
 # The main clean target

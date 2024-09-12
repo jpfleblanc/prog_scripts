@@ -18,11 +18,20 @@ print 'Argument List:', str(sys.argv)
 beta=str(sys.argv[1])
 print "Beta is "+ beta
 
+<<<<<<< HEAD
 #os.system("python ~/working_2017/prog_scripts/extract_DF.py")
 #os.system("python ~/working_2017/prog_scripts/extract_DF_chi.py")
 os.system("python ~/working_2017/prog_scripts/realslice_reducer.py chi_extrapolated.dat")
 os.system("python ~/working_2017/prog_scripts/ME_prep_james_lessfast.py "+beta+" chi_slices.dat")
 os.system("python ~/working_2017/prog_scripts/peakfinder_slice.py realfreq.dat")
 os.system("python ~/working_2017/prog_scripts/peakslice_plots.py peaks_slice.dat")
+=======
+#os.system("python ~/working/prog_scripts/extract_DF.py")
+#os.system("python ~/working/prog_scripts/extract_DF_chi.py")
+os.system("python ~/working/prog_scripts/realslice_reducer.py chi_file.dat")
+os.system("python ~/working/prog_scripts/ME_prep_james_lessfast.py "+beta+" chi_slices.dat")
+os.system("python ~/working/prog_scripts/peakfinder_slice.py realfreq.dat")
+os.system("python ~/working/prog_scripts/peakslice_plots.py peaks_slice.dat")
+>>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 
 

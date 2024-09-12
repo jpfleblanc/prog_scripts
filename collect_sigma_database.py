@@ -108,13 +108,14 @@ def eval():
 				
 	#--------- read in relevant data from sim.h5
 					f = h5py.File(os.getcwd()+"/sim.h5", 'r')
-					mu=float(f["/parameters/MU"].value)
-					beta=f["/parameters/BETA"].value
+					mu=float(f["/parameters/dictionary/MU"].value)
+					beta=f["/parameters/dictionary/BETA"].value
 					T=1.0/float(beta)
-					Uvalue=float(f["/parameters/U"].value	)
+					Uvalue=float(f["/parameters/dictionary/U"].value	)
 
-				if os.path.exists(os.getcwd()+"/run_DF"):
-					os.chdir(os.getcwd()+"/run_DF")
+				if os.path.exists(os.getcwd()+"/run_DF_nogg"):
+					os.chdir(os.getcwd()+"/run_DF_nogg")
+					os.system("python ~/working/prog_scripts/extract_DF.py")
 					if os.path.exists(os.getcwd()+"/sigma_output_nodal.dat"):
 						w, sigma_node = numpy.loadtxt("sigma_output_nodal.dat", usecols=(0,4), unpack=True)
 						w, sigma_antinode = numpy.loadtxt("sigma_output_antinodal.dat", usecols=(0,4), unpack=True)

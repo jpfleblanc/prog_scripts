@@ -62,7 +62,7 @@ for ival in range(0,len(qlist)):
 	
 	for j in range(0,len(single_val_w)):
 		if j>0 and j< len(single_val_w)-1:
-			if single_val_chi[j]>single_val_chi[j+1] and single_val_chi[j]>single_val_chi[j-1] and single_val_chi[j]>1e-4 and single_val_w[j]<1.5:
+			if single_val_chi[j]>single_val_chi[j+1] and single_val_chi[j]>single_val_chi[j-1] and single_val_chi[j]>1e-4 and single_val_w[j]<4.0:
 				final_output.append((qlist[ival][0], qlist[ival][1], single_val_w[j], single_val_chi[j]))
 				jmax=j
 				maxval=single_val_chi[j]

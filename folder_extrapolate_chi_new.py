@@ -132,8 +132,14 @@ def eval():
 			
 			if os.path.exists(os.getcwd()+"/chi_extrapolated.dat")==False:
 				if os.path.exists(inputdir_big+"/output.h5") and os.path.exists(inputdir_small+"/output.h5"):
+<<<<<<< HEAD
 					os.system("python ~/working/prog_scripts/extrapolate_chi_new.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta))    
 	
+=======
+					f2 = h5py.File(inputdir_big+"/output.h5", 'r')
+					kpts=f2["/df/parameters/kpts"].value
+					os.system("python ~/working/prog_scripts/extrapolate_chi.py "+str(big_f)+ " "+ inputdir_big + " "+ str(small_f)+ " " +inputdir_small+" " +str(beta)+" " +str(kpts))   
+>>>>>>> c6cd297a502ed28fc881b6211d81c7a64c57b32e
 			
 
 

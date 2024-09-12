@@ -215,6 +215,10 @@ def main(fname = "output.h5", verbosity = 1):
     print "Corrections "
     print sigma_cor1, sigma_cor2, gw_1, high_freq_int, hartree_part, density, density_2
 
+    double_occ=[]
+    double_occ.append((beta, 1/beta, potential_energy/U_value))
+    np.savetxt('double_occ.dat', double_occ)
+
     #print "Adding terms"
     #print potential_energy, gw_1, potential_energy+gw_1/2.0
 
