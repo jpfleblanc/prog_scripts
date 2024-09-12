@@ -159,7 +159,7 @@ def main(fname = "output.h5", verbosity = 1):
 
 
 
-    U_value=8.0#12.0
+    U_value=2.0#12.0
     #density=1.0
 
     for kx in range (n_kpoints):

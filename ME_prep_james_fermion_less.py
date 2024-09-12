@@ -42,7 +42,7 @@ for s in range(0,len(qlist)):
 
 	parm_file=open("maxent.parm",'w')
 	parm_file.write("N_ALPHA = 20\nALPHA_MIN = 0.1\nALPHA_MAX = 100\n")
-	parm_file.write("NORM = "+str(norm)+"\n")
+	parm_file.write("NORM = 1\n")#+str(norm)+"\n")
 	parm_file.write("OMEGA_MAX = 12\n")
 	parm_file.write("KERNEL = fermionic\n")
 	parm_file.write("BETA = "+str(beta)+"\n")
